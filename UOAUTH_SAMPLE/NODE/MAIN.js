@@ -1,6 +1,6 @@
 UOAUTH_SAMPLE.MAIN = METHOD({
 
-	run : function(params) {
+	run : function() {
 		'use strict';
 		
 		UOAUTH_SAMPLE.ROOM('oauthRoom', function(clientInfo, on, off) {
@@ -10,10 +10,10 @@ UOAUTH_SAMPLE.MAIN = METHOD({
 				UOAUTH.GET_TOKEN({
 					url : 'https://api.twitter.com/oauth/request_token',
 					method : 'POST',
-					consumerKey : 'oqJNUJQXxPgN3gxIrtiB7TMbc',
-					consumerSecret : '59lcELXwmao7GpK832A1fx4UiINiqHqWwFAHGrNY55JS2riCR5'
-				}, function(token) {
-					ret(token.oauth_token);
+					consumerKey : 'S3BHgVoKD6eTHXrzzbKw5ztUr',
+					consumerSecret : '9fXxULfpROHWGTrbyL6CjuL1RFdvPi38xqbOr8gaMG0GsvZXqp'
+				}, function(data) {
+					ret(data.oauth_token);
 				});
 			});
 			
@@ -24,12 +24,12 @@ UOAUTH_SAMPLE.MAIN = METHOD({
 					UOAUTH.GET_TOKEN({
 						url : 'https://api.twitter.com/oauth/access_token',
 						method : 'POST',
-						consumerKey : 'oqJNUJQXxPgN3gxIrtiB7TMbc',
-						consumerSecret : '59lcELXwmao7GpK832A1fx4UiINiqHqWwFAHGrNY55JS2riCR5',
+						consumerKey : 'S3BHgVoKD6eTHXrzzbKw5ztUr',
+						consumerSecret : '9fXxULfpROHWGTrbyL6CjuL1RFdvPi38xqbOr8gaMG0GsvZXqp',
 						token : params.oauthToken,
 						verifier : params.oauthVerifier
-					}, function(token) {
-						ret(token);
+					}, function(data) {
+						ret(data);
 					});
 				}
 			});
@@ -49,8 +49,8 @@ UOAUTH_SAMPLE.MAIN = METHOD({
 								url : 'https://api.twitter.com/1.1/users/lookup.json',
 								method : 'GET',
 								paramStr : 'screen_name=btncafe',
-								consumerKey : 'oqJNUJQXxPgN3gxIrtiB7TMbc',
-								consumerSecret : '59lcELXwmao7GpK832A1fx4UiINiqHqWwFAHGrNY55JS2riCR5',
+								consumerKey : 'S3BHgVoKD6eTHXrzzbKw5ztUr',
+								consumerSecret : '9fXxULfpROHWGTrbyL6CjuL1RFdvPi38xqbOr8gaMG0GsvZXqp',
 								token : tokenInfo.oauth_token,
 								tokenSecret : tokenInfo.oauth_token_secret
 							})

@@ -60,10 +60,10 @@ UOAUTH.GENERATE_AUTHORIZATION = METHOD(function(m) {
 			verifier = params.verifier,
 			
 			// nonce
-			nonce = '79bc8e2d75a56e97930e6614c7e089b3',//RANDOM_STR(42),
+			nonce = RANDOM_STR(42),
 			
 			// timestamp
-			timestamp = '1466356504',//INTEGER(Date.now() / 1000),
+			timestamp = INTEGER(Date.now() / 1000),
 			
 			// oauth data
 			oauthData = {
@@ -88,9 +88,9 @@ UOAUTH.GENERATE_AUTHORIZATION = METHOD(function(m) {
 			// authorization
 			authorization = 'OAuth ';
 			
-			EACH(keys, function(key) {
+			EACH(keys, function(key, i) {
 				if (data[key] !== undefined) {
-					if (key === 'oauth_consumer_key') {
+					if (body === '') {
 						body += key + '=' + encodeURIComponent(data[key]);
 					} else {
 						body += '&' + key + '=' + encodeURIComponent(data[key]);
@@ -102,15 +102,15 @@ UOAUTH.GENERATE_AUTHORIZATION = METHOD(function(m) {
 			
 			EACH(oauthData, function(value, name) {
 				if (value !== undefined) {
-					if (name === 'oauth_consumer_key') {
-						authorization += name + '="' + value + '"';
+					if (authorization === 'OAuth ') {
+						authorization += name + '="' + encodeURIComponent(value) + '"';
 					} else {
 						
 						if (name === 'oauth_signature_method') {
 							authorization += ', oauth_signature="' + encodeURIComponent(sha1(consumerSecret + '&' + tokenSecret, method + '&' + encodeURIComponent(url) + '&' + body, 'base64')) + '"';
 						}
 						
-						authorization += ', ' + name + '="' + value + '"';
+						authorization += ', ' + name + '="' + encodeURIComponent(value) + '"';
 					}
 				}
 			});
