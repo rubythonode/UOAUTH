@@ -28,11 +28,10 @@ UOAUTH.GET_TOKEN = METHOD(function(m) {
 			// url data
 			urlData = URL.parse(url);
 			
-			UOAUTH.REQUEST({
+			POST({
 				isSecure : urlData.protocol === 'https:',
 				host : urlData.hostname === TO_DELETE ? undefined : urlData.hostname,
 				port : urlData.port === TO_DELETE ? undefined : INTEGER(urlData.port),
-				method : 'POST',
 				uri : urlData.pathname === TO_DELETE ? undefined : urlData.pathname.substring(1),
 				headers : {
 					Authorization : UOAUTH.GENERATE_AUTHORIZATION(params)
