@@ -10,7 +10,7 @@ UOAUTH.GET_TOKEN = METHOD(function(m) {
 	
 	return {
 		
-		run : function(params, callback) {
+		run : function(params, callbackOrHandlers) {
 			//REQUIRED: params
 			//REQUIRED: params.url
 			//REQUIRED: params.method
@@ -19,14 +19,32 @@ UOAUTH.GET_TOKEN = METHOD(function(m) {
 			//OPTIONAL: params.accessTokenSecret
 			//OPTIONAL: params.token
 			//OPTIONAL: params.verifier
-			//REQUIRED: callback
+			//REQUIRED: callbackOrHandlers
+			//OPTIONAL: callbackOrHandlers.error
+			//REQUIRED: callbackOrHandlers.success
 	
 			var
 			// url
 			url = params.url,
 			
 			// url data
-			urlData = URL.parse(url);
+			urlData = URL.parse(url),
+			
+			// error handler.
+			errorHandler,
+			
+			// callback.
+			callback;
+			
+			if (callbackOrHandlers !== undefined) {
+				
+				if (CHECK_IS_DATA(callbackOrHandlers) !== true) {
+					callback = callbackOrHandlers;
+				} else {
+					errorHandler = callbackOrHandlers.error;
+					callback = callbackOrHandlers.success;
+				}
+			}
 			
 			POST({
 				isSecure : urlData.protocol === 'https:',
@@ -36,8 +54,11 @@ UOAUTH.GET_TOKEN = METHOD(function(m) {
 				headers : {
 					Authorization : UOAUTH.GENERATE_AUTHORIZATION(params)
 				}
-			}, function(content) {
-				callback(Querystring.parse(content));
+			}, {
+				error : errorHandler,
+				success : function(content) {
+					callback(Querystring.parse(content));
+				}
 			});
 		}
 	};

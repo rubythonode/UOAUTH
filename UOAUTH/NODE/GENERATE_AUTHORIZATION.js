@@ -22,7 +22,7 @@ UOAUTH.GENERATE_AUTHORIZATION = METHOD(function(m) {
 	
 	return {
 		
-		run : function(params, callback) {
+		run : function(params) {
 			//REQUIRED: params
 			//REQUIRED: params.url
 			//REQUIRED: params.method
@@ -32,7 +32,6 @@ UOAUTH.GENERATE_AUTHORIZATION = METHOD(function(m) {
 			//OPTIONAL: params.tokenSecret
 			//OPTIONAL: params.token
 			//OPTIONAL: params.verifier
-			//REQUIRED: callback
 	
 			var
 			// url
